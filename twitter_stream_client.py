@@ -2,13 +2,25 @@ import sys
 import json
 import tweepy
 import logging
-logging.basicConfig(filename='/var/log/twitter/tweets_logs.log', level=logging.INFO, format='%(message)s')
+
+from json import JSONEncoder
+
+logging.basicConfig(filename='logs/tweets_logs.log', level=logging.INFO, format='%(message)s')
+
+
+class StatusEncoder(JSONEncoder):
+    def default(self, o):
+        if hasattr(o, '__dict__'):
+            o.__dict__.pop('_api', None)
+            o.__dict__.pop('_json', None)
+            return o.__dict__
+        return str(o)
 
 
 class TwitterStreamListener(tweepy.StreamListener):
 
     def on_status(self, status):
-        logging.info(status._json)
+        logging.info(StatusEncoder().encode(status))
 
 
 def read_tweets(access_keys):
