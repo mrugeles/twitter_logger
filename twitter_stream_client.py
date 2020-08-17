@@ -5,7 +5,7 @@ import logging
 
 from json import JSONEncoder
 
-logging.basicConfig(filename='logs/tweets_logs.log', level=logging.INFO, format='%(message)s')
+logging.basicConfig(filename='/var/log/twitter/tweets_logs.log', level=logging.INFO, format='%(message)s')
 
 
 class StatusEncoder(JSONEncoder):
