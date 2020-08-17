@@ -17,8 +17,8 @@ def read_tweets(access_keys):
 
     api = tweepy.API(auth)
 
-    stream_istener = TwitterStreamListener()
-    stream = tweepy.Stream(auth=api.auth, listener=stream_istener)
+    stream_listener = TwitterStreamListener()
+    stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
     stream.sample()
 
 
