@@ -5,8 +5,6 @@ import logging
 
 from json import JSONEncoder
 
-logging.basicConfig(filename='logs/tweets_logs.log', level=logging.INFO, format='%(message)s')
-
 
 class StatusEncoder(JSONEncoder):
     def default(self, o):
@@ -54,4 +52,5 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         with open(sys.argv[1]) as json_file:
             config = json.load(json_file)
+            logging.basicConfig(filename=config['log_path'], level=logging.INFO, format='%(message)s')
             read_tweets(config)
