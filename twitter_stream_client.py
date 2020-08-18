@@ -5,7 +5,7 @@ import logging
 
 from json import JSONEncoder
 
-logging.basicConfig(filename='/var/log/twitter/tweets_logs.log', level=logging.INFO, format='%(message)s')
+logging.basicConfig(filename='logs/tweets_logs.log', level=logging.INFO, format='%(message)s')
 
 
 class StatusEncoder(JSONEncoder):
@@ -20,7 +20,22 @@ class StatusEncoder(JSONEncoder):
 class TwitterStreamListener(tweepy.StreamListener):
 
     def on_status(self, status):
-        logging.info(StatusEncoder().encode(status))
+        tweet = {
+            'created_at': status.created_at,
+            'id': status.id_str,
+            'text': status.text,
+            'source': status.source,
+            'user_id': status.user.id_str,
+            'screen_name': status.user.screen_name,
+            'location': status.user.location,
+            'time_zone': status.user.time_zone,
+            'utc_offset': status.user.utc_offset,
+            'lang': status.user.lang,
+            'geo': status.geo,
+            'coordinates': status.coordinates
+        }
+
+        logging.info(StatusEncoder().encode(tweet))
 
 
 def read_tweets(access_keys):
